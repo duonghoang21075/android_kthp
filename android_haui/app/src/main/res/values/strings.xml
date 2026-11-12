@@ -1,3 +1,125 @@
 <resources>
-    <string name="app_name">android_haui</string>
+    <string name="app_name">Classroom Manager</string>
+    <string name="overview_title">Tổng quan</string>
+    <string name="overview_subtitle">Classroom Manager</string>
+    <string name="room_list_title">Phòng học</string>
+    <string name="room_list_subtitle">Tra cứu và quản lý không gian học</string>
+
+    <string name="greeting">Xin chào,</string>
+    <string name="manager_role">Quản lý giảng đường</string>
+
+    <string name="total_space">KHÔNG GIAN HỌC TẬP</string>
+    <string name="total_rooms_count">25</string>
+    <string name="total_rooms_unit">phòng học</string>
+    <string name="total_rooms_desc">3 tầng · 3 loại phòng</string>
+
+    <string name="status_empty">Trống</string>
+    <string name="status_in_use">Đang sử dụng</string>
+    <string name="status_maintenance">Bảo trì</string>
+
+    <string name="quick_list">Danh sách phòng</string>
+    <string name="quick_stats">Thống kê phòng</string>
+
+    <string name="recent_updates">Cập nhật gần đây</string>
+    <string name="see_all">Xem tất cả</string>
+
+    <string name="search_hint">Nhập mã phòng hoặc tên phòng&#8230;</string>
+    <string name="filter_all">Tất cả</string>
+    <string name="all_rooms">Tất cả phòng học</string>
+    <string name="rooms_count_format">25 phòng</string>
+
+    <string name="search_title">Tìm kiếm phòng</string>
+    <string name="search_subtitle">Tìm theo mã, tên hoặc trạng thái</string>
+    <string name="search_suggestions_title">Thử nhanh từ khóa mẫu</string>
+    <string name="suggestion_lab">LAB</string>
+    <string name="suggestion_101">101</string>
+    <string name="suggestion_computer">Máy tính</string>
+    <string name="suggestion_all">Tất cả</string>
+
+    <string name="search_results_count">7</string>
+    <string name="search_results_label">phòng phù hợp</string>
+    <string name="reset_filters">Đặt lại</string>
+
+    <string name="tab_overview">Tổng quan</string>
+    <string name="tab_rooms">Phòng học</string>
+    <string name="tab_stats">Thống kê</string>
+    <string name="tab_manage">Quản lý</string>
+
+    <string name="room_code_placeholder">LAB201</string>
+    <string name="room_name_placeholder">Phòng Thực hành Máy tính 1</string>
+    <string name="room_floor_placeholder">Tầng 2 · thực hành</string>
+    <string name="room_capacity_placeholder"> · 40 chỗ</string>
+
+    <string name="detail_title">Chi tiết phòng</string>
+    <string name="detail_subtitle">Thông tin và tình trạng sử dụng</string>
+    <string name="label_room_type">PHÒNG HỌC</string>
+    <string name="detail_info_title">Thông tin phòng</string>
+    <string name="detail_floor">Tầng</string>
+    <string name="detail_type">Loại phòng</string>
+    <string name="detail_capacity">Sức chứa</string>
+    <string name="detail_equipment_title">Thiết bị trong phòng</string>
+    <string name="detail_note_title">Ghi chú tình trạng</string>
+    <string name="btn_edit_status">Sửa trạng thái phòng</string>
+    <string name="btn_back_to_list">Quay lại danh sách phòng</string>
+
+    <!-- Dummy data values for details -->
+    <string name="val_room_code">LAB201</string>
+    <string name="val_room_name">Phòng Thực hành Máy tính 1</string>
+    <string name="val_floor">Tầng 2</string>
+    <string name="val_type">Phòng thực hành</string>
+    <string name="val_capacity">40 chỗ ngồi</string>
+    <string name="val_equipment">40 PC • 01 Máy chiếu\n02 Điều hòa • Mạng LAN</string>
+    <string name="val_note">Đang bảo trì hệ thống điều hòa định kỳ.</string>
+
+    <string name="manage_title">Quản lý</string>
+    <string name="manage_subtitle">Tài khoản người quản lý</string>
+    <string name="manage_name_1">Ban Quản lý</string>
+    <string name="manage_name_2">Giảng đường</string>
+    <string name="manage_role_desc">Quản lý hệ thống phòng học</string>
+    <string name="manage_info_title">Thông tin nhân sự</string>
+    <string name="manage_emp_code_lbl">Mã nhân sự</string>
+    <string name="manage_emp_code_val">QL-GD001</string>
+    <string name="manage_email_lbl">Email công vụ</string>
+    <string name="manage_email_val">quanly.giangduong@edu.vn</string>
+    <string name="manage_role_lbl">Vai trò</string>
+    <string name="manage_role_val">Quản lý</string>
+    <string name="manage_app_info_title">Classroom Manager</string>
+    <string name="manage_app_version">Quản lý phòng học · Phiên bản 1.0</string>
+    <string name="manage_app_desc">25 phòng mẫu · 3 tầng\nGiao diện Android · Chế độ sáng</string>
+    <string name="manage_disclaimer_title">Bản mô phỏng dành cho Quản lý</string>
+    <string name="manage_disclaimer_desc">Tra cứu phòng, xem chi tiết, cập nhật trạng thái và theo dõi thống kê. Chưa kết nối cơ sở dữ liệu.</string>
+    <string name="btn_back_to_overview">Về tổng quan</string>
+
+    <string name="edit_status_title">Sửa trạng thái</string>
+    <string name="edit_status_subtitle">Cập nhật tình trạng phòng học</string>
+    <string name="label_updating">ĐANG CẬP NHẬT</string>
+    <string name="label_select_new_status">Chọn trạng thái mới</string>
+    <string name="status_empty_desc">Sẵn sàng bố trí lớp học</string>
+    <string name="status_inuse_desc">Đang có lớp học hoặc sự kiện</string>
+    <string name="status_maint_desc">Tạm ngưng sử dụng để sửa chữa</string>
+    <string name="label_update_note">Ghi chú cập nhật</string>
+    <string name="hint_update_note">Tùy chọn · Chọn ghi chú mẫu để mô tả</string>
+    <string name="btn_cancel">Hủy</string>
+    <string name="btn_save_status">Lưu trạng thái</string>
+
+    <string name="stats_title">Thống kê</string>
+    <string name="stats_subtitle">Toàn cảnh không gian học tập</string>
+    <string name="stats_total_rooms">TỔNG SỐ PHÒNG HỌC</string>
+    <string name="stats_total_desc">phòng trong hệ thống</string>
+    <string name="stats_by_status">Theo trạng thái</string>
+    <string name="stats_by_floor">Theo tầng</string>
+    <string name="stats_floor_1">Tầng 1</string>
+    <string name="stats_floor_2">Tầng 2</string>
+    <string name="stats_floor_3">Tầng 3</string>
+    <string name="stats_by_type">Theo loại phòng</string>
+    <string name="stats_type_theory">Phòng lý thuyết</string>
+    <string name="stats_type_practice">Phòng thực hành</string>
+    <string name="stats_type_hall">Hội trường</string>
+    <string name="stats_disclaimer">Dữ liệu minh họa · Số liệu trạng thái thay đổi khi bạn cập nhật phòng.</string>
+    <string name="val_10_rooms">10 phòng</string>
+    <string name="val_9_rooms">9 phòng</string>
+    <string name="val_6_rooms">6 phòng</string>
+    <string name="val_15_rooms">15 phòng</string>
+    <string name="val_7_rooms">7 phòng</string>
+    <string name="val_3_rooms">3 phòng</string>
 </resources>
