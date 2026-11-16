@@ -26,14 +26,6 @@
             android:textColor="@color/text_dark"
             android:textSize="26sp"
             android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="@string/manage_subtitle"
-            android:textColor="@color/text_gray"
-            android:textSize="13sp" />
     </LinearLayout>
 
     <!-- Scrollable Content -->
@@ -42,7 +34,7 @@
         android:layout_height="0dp"
         android:fillViewport="true"
         app:layout_constraintTop_toBottomOf="@id/headerLayout"
-        app:layout_constraintBottom_toTopOf="@id/bottomNavLayout">
+        app:layout_constraintBottom_toTopOf="@id/bottomNavDivider">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -51,47 +43,6 @@
             android:paddingHorizontal="24dp"
             android:paddingVertical="8dp">
 
-            <!-- Profile Hero Card -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_profile_hero"
-                android:orientation="vertical"
-                android:padding="18dp"
-                android:layout_marginBottom="16dp">
-
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/ic_person"
-                    app:tint="@color/card_blue_bg"
-                    android:contentDescription="@string/manage_title"
-                    android:layout_marginBottom="12dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/manage_name_1"
-                    android:textColor="@color/text_dark"
-                    android:textSize="24sp"
-                    android:textStyle="bold"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/manage_name_2"
-                    android:textColor="@color/text_dark"
-                    android:textSize="24sp"
-                    android:textStyle="bold"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/manage_role_desc"
-                    android:textColor="@color/text_filter_inactive"
-                    android:textSize="13sp"
-                    android:layout_marginTop="12dp"/>
-            </LinearLayout>
 
             <!-- Personnel Info Card -->
             <LinearLayout
@@ -177,212 +128,23 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- App Info Card -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_detail_card"
-                android:orientation="vertical"
-                android:padding="18dp"
-                android:layout_marginBottom="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/manage_app_info_title"
-                    android:textColor="@color/text_dark"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:layout_marginBottom="12dp"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/manage_app_version"
-                    android:textColor="@color/text_filter_inactive"
-                    android:textSize="13sp"
-                    android:layout_marginBottom="12dp"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/manage_app_desc"
-                    android:textColor="@color/text_filter_inactive"
-                    android:textSize="14sp"
-                    android:lineSpacingExtra="4dp"/>
-            </LinearLayout>
-
-            <!-- Disclaimer Card -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_detail_card"
-                android:orientation="vertical"
-                android:padding="18dp"
-                android:layout_marginBottom="16dp">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_info"
-                    android:layout_marginBottom="12dp"
-                    android:contentDescription="@string/manage_disclaimer_title"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/manage_disclaimer_title"
-                    android:textColor="@color/text_dark"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:layout_marginBottom="12dp"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/manage_disclaimer_desc"
-                    android:textColor="@color/text_gray"
-                    android:textSize="14sp"
-                    android:lineSpacingExtra="4dp"/>
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/btnBackToOverview"
-                android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:background="@drawable/bg_primary_button"
-                android:text="@string/btn_back_to_overview"
-                android:textColor="@color/white"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:layout_marginBottom="16dp"/>
-
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <!-- Bottom Navigation -->
-    <LinearLayout
-        android:id="@+id/bottomNavLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@color/white"
-        android:paddingVertical="10dp"
-        android:paddingHorizontal="8dp"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center">
-            <FrameLayout
-                android:layout_width="58dp"
-                android:layout_height="30dp">
-                <ImageView
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
-                    android:src="@drawable/ic_home"
-                    app:tint="@color/text_gray"
-                    android:layout_gravity="center"
-                    android:contentDescription="@string/tab_overview"/>
-            </FrameLayout>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tab_overview"
-                android:textColor="@color/text_gray"
-                android:textSize="11sp"
-                android:layout_marginTop="2dp"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center">
-            <FrameLayout
-                android:layout_width="58dp"
-                android:layout_height="30dp">
-                <ImageView
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
-                    android:src="@drawable/ic_room"
-                    app:tint="@color/text_gray"
-                    android:layout_gravity="center"
-                    android:contentDescription="@string/tab_rooms"/>
-            </FrameLayout>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tab_rooms"
-                android:textColor="@color/text_gray"
-                android:textSize="11sp"
-                android:layout_marginTop="2dp"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center">
-            <FrameLayout
-                android:layout_width="58dp"
-                android:layout_height="30dp">
-                <ImageView
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
-                    android:src="@drawable/ic_chart"
-                    app:tint="@color/text_gray"
-                    android:layout_gravity="center"
-                    android:contentDescription="@string/tab_stats"/>
-            </FrameLayout>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tab_stats"
-                android:textColor="@color/text_gray"
-                android:textSize="11sp"
-                android:layout_marginTop="2dp"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center">
-            <FrameLayout
-                android:layout_width="58dp"
-                android:layout_height="30dp"
-                android:background="@drawable/bg_nav_active">
-                <ImageView
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
-                    android:src="@drawable/ic_person"
-                    app:tint="@color/card_blue_bg"
-                    android:layout_gravity="center"
-                    android:contentDescription="@string/tab_manage"/>
-            </FrameLayout>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tab_manage"
-                android:textColor="@color/card_blue_bg"
-                android:textSize="11sp"
-                android:textStyle="bold"
-                android:layout_marginTop="2dp"/>
-        </LinearLayout>
-    </LinearLayout>
-
+    <!-- Đường kẻ phân cách Bottom Navigation -->
     <View
+        android:id="@+id/bottomNavDivider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/border_gray"
-        app:layout_constraintBottom_toTopOf="@id/bottomNavLayout"/>
+        app:layout_constraintBottom_toTopOf="@id/layoutBottomNav"/>
+
+    <!-- Thành phần Bottom Navigation tách riêng tái sử dụng -->
+    <include
+        android:id="@+id/layoutBottomNav"
+        layout="@layout/layout_bottom_nav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

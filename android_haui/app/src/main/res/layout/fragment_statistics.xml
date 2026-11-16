@@ -1,6 +1,463 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/bg_color">
+
+    <!-- Header tách riêng tái sử dụng -->
+    <include
+        android:id="@+id/headerLayout"
+        layout="@layout/layout_header_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Scrollable Content -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@id/headerLayout"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="8dp">
+
+            <!-- Total Rooms Card -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_blue_card"
+                android:orientation="vertical"
+                android:padding="18dp"
+                android:layout_marginBottom="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/stats_total_rooms"
+                    android:textColor="@color/card_blue_text"
+                    android:textSize="11sp"
+                    android:textStyle="bold"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="bottom"
+                    android:layout_marginTop="12dp">
+                    <TextView
+                        android:id="@+id/tvStatsTotalRooms"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/total_rooms_count"
+                        android:textColor="@color/white"
+                        android:textSize="38sp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/stats_total_desc"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginBottom="8dp"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Chart Status Card -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_detail_card"
+                android:orientation="vertical"
+                android:padding="18dp"
+                android:layout_marginBottom="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/stats_by_status"
+                    android:textColor="@color/text_dark"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="22dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <!-- Fake Donut Chart Placeholder -->
+                    <RelativeLayout
+                        android:layout_width="140dp"
+                        android:layout_height="140dp"
+                        android:layout_marginEnd="22dp">
+                        <ProgressBar
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:indeterminate="false"
+                            android:progressDrawable="@drawable/bg_search_bar"
+                            android:progress="100"/>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_centerInParent="true"
+                            android:gravity="center">
+                            <TextView
+                                android:id="@+id/tvStatsTotalCenter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/total_rooms_count"
+                                android:textColor="@color/text_dark"
+                                android:textSize="28sp"
+                                android:textStyle="bold"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="phòng"
+                                android:textColor="@color/text_gray"
+                                android:textSize="12sp"/>
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                    <!-- Legend -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginBottom="16dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/status_empty"
+                                android:textColor="@color/status_empty_text"
+                                android:textSize="12sp"
+                                android:textStyle="bold"/>
+                            <TextView
+                                android:id="@+id/tvStatsEmptyPercent"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="12 phòng · 48 %"
+                                android:textColor="@color/text_gray"
+                                android:textSize="11sp"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginBottom="16dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/status_in_use"
+                                android:textColor="@color/status_inuse_text"
+                                android:textSize="12sp"
+                                android:textStyle="bold"/>
+                            <TextView
+                                android:id="@+id/tvStatsInUsePercent"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="10 phòng · 40 %"
+                                android:textColor="@color/text_gray"
+                                android:textSize="11sp"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/status_maintenance"
+                                android:textColor="@color/status_maint_text"
+                                android:textSize="12sp"
+                                android:textStyle="bold"/>
+                            <TextView
+                                android:id="@+id/tvStatsMaintPercent"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="3 phòng · 12 %"
+                                android:textColor="@color/text_gray"
+                                android:textSize="11sp"/>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Chart Floor Card -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_detail_card"
+                android:orientation="vertical"
+                android:padding="18dp"
+                android:layout_marginBottom="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/stats_by_floor"
+                    android:textColor="@color/text_dark"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="12dp"/>
+
+                <LinearLayout
+                    android:id="@+id/layoutFloorContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp">
+                        <TextView
+                            android:id="@+id/tvFloor1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/stats_floor_1"
+                            android:textColor="@color/text_filter_inactive"
+                            android:textSize="13sp"
+                            android:layout_alignParentStart="true"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/val_10_rooms"
+                            android:textColor="@color/text_dark"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            android:layout_alignParentEnd="true"/>
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="8dp"
+                            android:layout_below="@id/tvFloor1"
+                            android:layout_marginTop="7dp"
+                            android:background="@drawable/bg_bar_track">
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="8dp"
+                                android:background="@drawable/bg_bar_progress"/>
+                        </FrameLayout>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp">
+                        <TextView
+                            android:id="@+id/tvFloor2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/stats_floor_2"
+                            android:textColor="@color/text_filter_inactive"
+                            android:textSize="13sp"
+                            android:layout_alignParentStart="true"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/val_9_rooms"
+                            android:textColor="@color/text_dark"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            android:layout_alignParentEnd="true"/>
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="8dp"
+                            android:layout_below="@id/tvFloor2"
+                            android:layout_marginTop="7dp"
+                            android:background="@drawable/bg_bar_track">
+                            <View
+                                android:layout_width="200dp"
+                                android:layout_height="8dp"
+                                android:background="@drawable/bg_bar_progress"/>
+                        </FrameLayout>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/tvFloor3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/stats_floor_3"
+                            android:textColor="@color/text_filter_inactive"
+                            android:textSize="13sp"
+                            android:layout_alignParentStart="true"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/val_6_rooms"
+                            android:textColor="@color/text_dark"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            android:layout_alignParentEnd="true"/>
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="8dp"
+                            android:layout_below="@id/tvFloor3"
+                            android:layout_marginTop="7dp"
+                            android:background="@drawable/bg_bar_track">
+                            <View
+                                android:layout_width="140dp"
+                                android:layout_height="8dp"
+                                android:background="@drawable/bg_bar_progress"/>
+                        </FrameLayout>
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Chart Type Card -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_detail_card"
+                android:orientation="vertical"
+                android:padding="18dp"
+                android:layout_marginBottom="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/stats_by_type"
+                    android:textColor="@color/text_dark"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="12dp"/>
+
+                <LinearLayout
+                    android:id="@+id/layoutTypeContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp">
+                        <TextView
+                            android:id="@+id/tvType1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/stats_type_theory"
+                            android:textColor="@color/text_filter_inactive"
+                            android:textSize="13sp"
+                            android:layout_alignParentStart="true"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/val_15_rooms"
+                            android:textColor="@color/text_dark"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            android:layout_alignParentEnd="true"/>
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="8dp"
+                            android:layout_below="@id/tvType1"
+                            android:layout_marginTop="7dp"
+                            android:background="@drawable/bg_bar_track">
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="8dp"
+                                android:background="@drawable/bg_bar_progress"/>
+                        </FrameLayout>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp">
+                        <TextView
+                            android:id="@+id/tvType2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/stats_type_practice"
+                            android:textColor="@color/text_filter_inactive"
+                            android:textSize="13sp"
+                            android:layout_alignParentStart="true"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/val_7_rooms"
+                            android:textColor="@color/text_dark"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            android:layout_alignParentEnd="true"/>
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="8dp"
+                            android:layout_below="@id/tvType2"
+                            android:layout_marginTop="7dp"
+                            android:background="@drawable/bg_bar_track">
+                            <View
+                                android:layout_width="160dp"
+                                android:layout_height="8dp"
+                                android:background="@drawable/bg_bar_progress"/>
+                        </FrameLayout>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/tvType3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/stats_type_hall"
+                            android:textColor="@color/text_filter_inactive"
+                            android:textSize="13sp"
+                            android:layout_alignParentStart="true"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/val_3_rooms"
+                            android:textColor="@color/text_dark"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            android:layout_alignParentEnd="true"/>
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="8dp"
+                            android:layout_below="@id/tvType3"
+                            android:layout_marginTop="7dp"
+                            android:background="@drawable/bg_bar_track">
+                            <View
+                                android:layout_width="70dp"
+                                android:layout_height="8dp"
+                                android:background="@drawable/bg_bar_progress"/>
+                        </FrameLayout>
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/stats_disclaimer"
+                android:textColor="@color/text_gray"
+                android:textSize="12sp"
+                android:layout_marginBottom="16dp"/>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

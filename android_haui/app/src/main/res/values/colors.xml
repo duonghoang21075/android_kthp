@@ -24,4 +24,8 @@
 
     <color name="nav_active_bg">#E7EEFF</color>
     <color name="hero_bg">#E7EEFF</color>
+
+    <color name="danger_bg">#FEE2E2</color>
+    <color name="danger_border">#FECACA</color>
+    <color name="danger_text">#DC2626</color>
 </resources>

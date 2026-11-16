@@ -58,3 +58,8 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.ext.junit)
 }
+
+tasks.register<Copy>("copyPrepopulatedDb") {
+    from("src/main/java/com/example/android_haui/database/room-management-app.db")
+    into("src/main/assets")
+}

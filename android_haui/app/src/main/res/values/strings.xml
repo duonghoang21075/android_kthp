@@ -22,11 +22,15 @@
 
     <string name="recent_updates">Cập nhật gần đây</string>
     <string name="see_all">Xem tất cả</string>
+    <string name="empty_recent_rooms">Chưa có dữ liệu phòng học</string>
+    <string name="default_stat_placeholder">--</string>
+    <string name="default_desc_placeholder">-- tầng · -- loại phòng</string>
+    <string name="room_capacity_format">&#160;· %1$d chỗ</string>
 
     <string name="search_hint">Nhập mã phòng hoặc tên phòng&#8230;</string>
     <string name="filter_all">Tất cả</string>
     <string name="all_rooms">Tất cả phòng học</string>
-    <string name="rooms_count_format">25 phòng</string>
+    <string name="rooms_count_format">%1$d phòng</string>
 
     <string name="search_title">Tìm kiếm phòng</string>
     <string name="search_subtitle">Tìm theo mã, tên hoặc trạng thái</string>
@@ -60,7 +64,12 @@
     <string name="detail_equipment_title">Thiết bị trong phòng</string>
     <string name="detail_note_title">Ghi chú tình trạng</string>
     <string name="btn_edit_status">Sửa trạng thái phòng</string>
+    <string name="btn_delete_room">Xóa phòng học</string>
     <string name="btn_back_to_list">Quay lại danh sách phòng</string>
+    <string name="delete_confirm_title">Xác nhận xóa phòng học</string>
+    <string name="delete_confirm_desc">Hành động này sẽ xóa vĩnh viễn thông tin phòng học khỏi hệ thống và không thể hoàn tác.</string>
+    <string name="btn_confirm_delete">Xóa phòng</string>
+    <string name="msg_delete_success">Đã xóa phòng học thành công</string>
 
     <!-- Dummy data values for details -->
     <string name="val_room_code">LAB201</string>
@@ -122,4 +131,39 @@
     <string name="val_15_rooms">15 phòng</string>
     <string name="val_7_rooms">7 phòng</string>
     <string name="val_3_rooms">3 phòng</string>
+
+    <!-- Thêm phòng (Add Room) -->
+    <string name="add_room_title">Thêm phòng</string>
+    <string name="add_room_subtitle">Tạo mới không gian phòng học</string>
+    <string name="btn_add_room_short">+ Thêm phòng</string>
+    <string name="quick_add_room">Thêm phòng</string>
+    <string name="add_room_info_title">Thông tin phòng mới</string>
+    <string name="add_room_info_desc">Điền thông tin chi tiết · Các trường có * là bắt buộc</string>
+    <string name="add_room_code_label">Mã phòng *</string>
+    <string name="add_room_code_hint">VD: P109, LAB205, HT301</string>
+    <string name="add_room_code_helper">Mã phòng là duy nhất trong hệ thống.</string>
+    <string name="add_room_name_label">Tên phòng *</string>
+    <string name="add_room_name_hint">VD: Phòng Lý thuyết 109</string>
+    <string name="add_room_floor_label">Tầng *</string>
+    <string name="add_room_floor_val">Tầng 1</string>
+    <string name="add_room_type_label">Loại phòng *</string>
+    <string name="add_room_type_val">Lý thuyết</string>
+    <string name="add_room_capacity_label">Sức chứa (chỗ) *</string>
+    <string name="add_room_capacity_hint">VD: 60</string>
+    <string name="add_room_capacity_default">60</string>
+    <string name="add_room_status_label">Trạng thái ban đầu</string>
+    <string name="add_room_equipment_label">Thiết bị trong phòng</string>
+    <string name="add_room_equipment_hint">VD: 01 Máy chiếu, Loa, 02 Điều hòa</string>
+    <string name="add_room_equipment_default">01 Máy chiếu, Loa, 02 Điều hòa</string>
+    <string name="add_room_equipment_suggest_1">Máy chiếu · Điều hòa</string>
+    <string name="add_room_equipment_suggest_2">40 PC · Mạng LAN</string>
+    <string name="add_room_equipment_suggest_3">Âm thanh · Hội trường</string>
+    <string name="add_room_equipment_val_1">01 Máy chiếu, Loa, 02 Điều hòa, Bàn ghế</string>
+    <string name="add_room_equipment_val_2">40 PC, 01 Máy chiếu, 02 Điều hòa, Mạng LAN</string>
+    <string name="add_room_equipment_val_3">Hệ thống âm thanh, 02 Máy chiếu lớn, 04 Điều hòa</string>
+    <string name="add_room_note_label">Ghi chú tình trạng</string>
+    <string name="add_room_note_hint">VD: Phòng mới, thiết bị hoạt động tốt.</string>
+    <string name="add_room_note_default">Phòng mới, thiết bị hoạt động tốt.</string>
+    <string name="btn_save_room">Lưu phòng mới</string>
+    <string name="msg_add_room_success">Đã thêm phòng %1$s thành công</string>
 </resources>
