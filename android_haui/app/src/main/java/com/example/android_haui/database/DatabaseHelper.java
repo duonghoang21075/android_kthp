@@ -15,6 +15,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.security.MessageDigest;
 
 /**
  * Lớp quản lý kết nối SQLite theo mô hình Singleton.
@@ -25,6 +26,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "DatabaseHelper";
     private static final String PREFS_NAME = "haui_db_prefs";
     private static final String KEY_ASSET_DB_VERSION = "asset_db_version";
+    private static final String KEY_ASSET_DB_CHECKSUM = "asset_db_checksum";
 
     @android.annotation.SuppressLint("StaticFieldLeak")
     private static volatile DatabaseHelper instance;
@@ -51,17 +53,48 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
+     * Tính mã băm MD5 của tệp CSDL trong assets để phát hiện thay đổi nội dung tự động.
+     */
+    private String getAssetChecksum(String assetFileName) {
+        try (InputStream inputStream = appContext.getAssets().open(assetFileName)) {
+            MessageDigest digest = MessageDigest.getInstance("MD5");
+            byte[] buffer = new byte[1024 * 4];
+            int length;
+            while ((length = inputStream.read(buffer)) > 0) {
+                digest.update(buffer, 0, length);
+            }
+            byte[] md5Bytes = digest.digest();
+            StringBuilder sb = new StringBuilder();
+            for (byte b : md5Bytes) {
+                sb.append(String.format("%02x", b));
+            }
+            return sb.toString();
+        } catch (Exception e) {
+            Log.w(TAG, "Không thể tính checksum tệp asset: " + e.getMessage());
+            return "";
+        }
+    }
+
+    /**
      * Kiểm tra và sao chép tệp .db từ assets sang thư mục databases nội bộ của ứng dụng.
-     * Đồng bộ PRAGMA user_version = DATABASE_VERSION ngay sau khi copy để ngăn SQLiteOpenHelper
+     * Tự động phát hiện khi file CSDL trong assets bị chỉnh sửa (qua MD5 checksum) hoặc đổi version,
+     * đồng bộ PRAGMA user_version = DATABASE_VERSION ngay sau khi copy để ngăn SQLiteOpenHelper
      * gọi nhầm onCreate() hoặc onUpgrade() gây chèn dữ liệu thừa.
      */
     public synchronized void copyDatabaseFromAssetsIfNeeded() {
         File dbFile = appContext.getDatabasePath(Constants.DATABASE_NAME);
         SharedPreferences prefs = appContext.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         int installedAssetVersion = prefs.getInt(KEY_ASSET_DB_VERSION, 0);
+        String installedChecksum = prefs.getString(KEY_ASSET_DB_CHECKSUM, "");
+        String currentChecksum = getAssetChecksum(Constants.DATABASE_NAME);
 
-        if (dbFile.exists() && installedAssetVersion == Constants.DATABASE_VERSION) {
-            Log.d(TAG, "Database từ assets đã được đồng bộ ở phiên bản " + installedAssetVersion);
+        boolean isAlreadySynced = dbFile.exists()
+                && installedAssetVersion == Constants.DATABASE_VERSION
+                && !currentChecksum.isEmpty()
+                && currentChecksum.equals(installedChecksum);
+
+        if (isAlreadySynced) {
+            Log.d(TAG, "Database từ assets đã được đồng bộ chuẩn xác (MD5: " + installedChecksum + ")");
             return;
         }
 
@@ -71,7 +104,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Log.d(TAG, "Tạo thư mục databases: " + created);
         }
 
-        // Xóa tệp DB cũ (nếu có dữ liệu thừa từ phiên bản trước) trước khi chép mới từ assets
+        // Xóa tệp DB cũ (nếu có dữ liệu thừa hoặc đã sửa đổi trong assets) trước khi chép mới từ assets
         if (dbFile.exists()) {
             SQLiteDatabase.deleteDatabase(dbFile);
         }
@@ -93,8 +126,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 ensureCompatibility(copiedDb);
             }
 
-            prefs.edit().putInt(KEY_ASSET_DB_VERSION, Constants.DATABASE_VERSION).apply();
-            Log.d(TAG, "Sao chép database chuẩn từ assets thành công: " + dbFile.getAbsolutePath());
+            prefs.edit()
+                    .putInt(KEY_ASSET_DB_VERSION, Constants.DATABASE_VERSION)
+                    .putString(KEY_ASSET_DB_CHECKSUM, currentChecksum)
+                    .apply();
+            Log.d(TAG, "Sao chép database chuẩn từ assets thành công: " + dbFile.getAbsolutePath() + " (MD5: " + currentChecksum + ")");
         } catch (IOException e) {
             Log.w(TAG, "Không thể sao chép DB từ assets, sẽ khởi tạo qua onCreate(): " + e.getMessage());
         }

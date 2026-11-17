@@ -96,17 +96,15 @@
                     android:orientation="horizontal"
                     android:gravity="center_vertical">
 
-                    <!-- Fake Donut Chart Placeholder -->
+                    <!-- Biểu đồ Donut theo trạng thái phòng -->
                     <RelativeLayout
                         android:layout_width="140dp"
                         android:layout_height="140dp"
                         android:layout_marginEnd="22dp">
-                        <ProgressBar
+                        <com.example.android_haui.ui.StatusDonutChartView
+                            android:id="@+id/donutChartStatus"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:indeterminate="false"
-                            android:progressDrawable="@drawable/bg_search_bar"
-                            android:progress="100"/>
+                            android:layout_height="match_parent" />
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -201,14 +199,16 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- Chart Floor Card -->
+            <!-- Chart Floor Card (Tạm ẩn) -->
             <LinearLayout
+                android:id="@+id/cardFloorStats"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_detail_card"
                 android:orientation="vertical"
                 android:padding="18dp"
-                android:layout_marginBottom="16dp">
+                android:layout_marginBottom="16dp"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -325,14 +325,16 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- Chart Type Card -->
+            <!-- Chart Type Card (Tạm ẩn) -->
             <LinearLayout
+                android:id="@+id/cardTypeStats"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_detail_card"
                 android:orientation="vertical"
                 android:padding="18dp"
-                android:layout_marginBottom="16dp">
+                android:layout_marginBottom="16dp"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -448,14 +450,6 @@
                     </RelativeLayout>
                 </LinearLayout>
             </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/stats_disclaimer"
-                android:textColor="@color/text_gray"
-                android:textSize="12sp"
-                android:layout_marginBottom="16dp"/>
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

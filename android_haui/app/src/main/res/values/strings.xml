@@ -124,7 +124,7 @@
     <string name="stats_type_theory">Phòng lý thuyết</string>
     <string name="stats_type_practice">Phòng thực hành</string>
     <string name="stats_type_hall">Hội trường</string>
-    <string name="stats_disclaimer">Dữ liệu minh họa · Số liệu trạng thái thay đổi khi bạn cập nhật phòng.</string>
+    <string name="stats_disclaimer"></string>
     <string name="val_10_rooms">10 phòng</string>
     <string name="val_9_rooms">9 phòng</string>
     <string name="val_6_rooms">6 phòng</string>

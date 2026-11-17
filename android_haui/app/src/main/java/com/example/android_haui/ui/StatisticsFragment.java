@@ -36,6 +36,7 @@ public class StatisticsFragment extends Fragment {
 
     private TextView tvStatsTotalRooms;
     private TextView tvStatsTotalCenter;
+    private StatusDonutChartView donutChartStatus;
     private TextView tvStatsEmptyPercent;
     private TextView tvStatsInUsePercent;
     private TextView tvStatsMaintPercent;
@@ -68,6 +69,7 @@ public class StatisticsFragment extends Fragment {
     private void initViews(View view) {
         tvStatsTotalRooms = view.findViewById(R.id.tvStatsTotalRooms);
         tvStatsTotalCenter = view.findViewById(R.id.tvStatsTotalCenter);
+        donutChartStatus = view.findViewById(R.id.donutChartStatus);
         tvStatsEmptyPercent = view.findViewById(R.id.tvStatsEmptyPercent);
         tvStatsInUsePercent = view.findViewById(R.id.tvStatsInUsePercent);
         tvStatsMaintPercent = view.findViewById(R.id.tvStatsMaintPercent);
@@ -91,6 +93,9 @@ public class StatisticsFragment extends Fragment {
                 if (tvStatsTotalCenter != null) {
                     tvStatsTotalCenter.setText(String.valueOf(total));
                 }
+                if (donutChartStatus != null) {
+                    donutChartStatus.setStatusCounts(stats.emptyRooms, stats.inUseRooms, stats.maintenanceRooms);
+                }
 
                 if (total > 0) {
                     int emptyPct = (int) Math.round((stats.emptyRooms * 100.0) / total);
@@ -105,6 +110,16 @@ public class StatisticsFragment extends Fragment {
                     }
                     if (tvStatsMaintPercent != null) {
                         tvStatsMaintPercent.setText(String.format(Locale.getDefault(), "%d phòng · %d%%", stats.maintenanceRooms, maintPct));
+                    }
+                } else {
+                    if (tvStatsEmptyPercent != null) {
+                        tvStatsEmptyPercent.setText("0 phòng · 0%");
+                    }
+                    if (tvStatsInUsePercent != null) {
+                        tvStatsInUsePercent.setText("0 phòng · 0%");
+                    }
+                    if (tvStatsMaintPercent != null) {
+                        tvStatsMaintPercent.setText("0 phòng · 0%");
                     }
                 }
 

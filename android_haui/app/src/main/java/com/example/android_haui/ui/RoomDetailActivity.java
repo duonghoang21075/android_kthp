@@ -143,11 +143,6 @@ public class RoomDetailActivity extends AppCompatActivity {
     }
 
     private void setupActionButtons() {
-        View btnBackToList = findViewById(R.id.btnBackToList);
-        if (btnBackToList != null) {
-            btnBackToList.setOnClickListener(v -> finish());
-        }
-
         View btnEditStatus = findViewById(R.id.btnEditStatus);
         if (btnEditStatus != null) {
             btnEditStatus.setOnClickListener(v -> {
@@ -161,7 +156,7 @@ public class RoomDetailActivity extends AppCompatActivity {
 
         View btnDeleteRoom = findViewById(R.id.btnDeleteRoom);
         if (btnDeleteRoom != null) {
-            btnDeleteRoom.setOnClickListener(v -> confirmAndDeleteRoom());
+            btnDeleteRoom.setVisibility(View.GONE);
         }
     }
 

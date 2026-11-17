@@ -15,7 +15,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -73,15 +72,10 @@ public class RoomListFragment extends Fragment {
 
         roomRepository = RoomRepository.getInstance(requireContext());
 
-        HeaderHelper.setupWithAction(
+        HeaderHelper.setup(
                 view,
                 R.string.room_list_title,
-                R.string.room_list_subtitle,
-                R.string.btn_add_room_short,
-                () -> {
-                    Intent intent = new Intent(requireActivity(), AddRoomActivity.class);
-                    startActivity(intent);
-                }
+                R.string.room_list_subtitle
         );
         initViews(view);
         setupListeners(view);
@@ -364,26 +358,6 @@ public class RoomListFragment extends Fragment {
                         intent.putExtra(Constants.EXTRA_ROOM_CODE, room.getRoomCode());
                         intent.putExtra(Constants.EXTRA_ROOM_ITEM, room);
                         startActivity(intent);
-                    },
-                    v -> {
-                        DeleteConfirmDialogHelper.show(requireContext(), room, () -> {
-                            roomRepository.deleteRoom(room.getRoomCode(), new RepositoryCallback<Boolean>() {
-                                @Override
-                                public void onSuccess(Boolean deleted) {
-                                    if (!isAdded()) return;
-                                    if (Boolean.TRUE.equals(deleted)) {
-                                        Toast.makeText(requireContext(), R.string.msg_delete_success, Toast.LENGTH_SHORT).show();
-                                        loadRoomsData();
-                                    }
-                                }
-
-                                @Override
-                                public void onError(Exception e) {
-                                    Log.e(TAG, "Lỗi xóa phòng: " + e.getMessage());
-                                }
-                            });
-                        });
-                        return true;
                     }
             );
             layoutRoomsList.addView(itemView);
