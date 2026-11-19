@@ -2,10 +2,12 @@ package com.example.android_haui.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +28,7 @@ import com.example.android_haui.model.Room;
 import com.example.android_haui.repository.RepositoryCallback;
 import com.example.android_haui.repository.RoomRepository;
 import com.example.android_haui.utils.Constants;
+import com.example.android_haui.utils.RecentRoomHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +48,9 @@ public class RoomListFragment extends Fragment {
     private EditText etSearchRoom;
     private TextView btnClearSearch;
     private View layoutSuggestions;
+    private TextView tvSuggestionsTitle;
+    private TextView btnClearSearchHistory;
+    private LinearLayout layoutChipsContainer;
 
     private LinearLayout layoutRoomsList;
     private TextView tvEmptyRoomsList;
@@ -80,12 +86,14 @@ public class RoomListFragment extends Fragment {
         initViews(view);
         setupListeners(view);
         loadRoomsData();
+        loadSuggestionChips();
     }
 
     @Override
     public void onResume() {
         super.onResume();
         loadRoomsData();
+        loadSuggestionChips();
     }
 
     private void initViews(View view) {
@@ -94,6 +102,9 @@ public class RoomListFragment extends Fragment {
         etSearchRoom = view.findViewById(R.id.etSearchRoom);
         btnClearSearch = view.findViewById(R.id.btnClearSearch);
         layoutSuggestions = view.findViewById(R.id.layoutSuggestions);
+        tvSuggestionsTitle = view.findViewById(R.id.tvSuggestionsTitle);
+        btnClearSearchHistory = view.findViewById(R.id.btnClearSearchHistory);
+        layoutChipsContainer = view.findViewById(R.id.layoutChipsContainer);
 
         layoutRoomsList = view.findViewById(R.id.layoutRoomsList);
         tvEmptyRoomsList = view.findViewById(R.id.tvEmptyRoomsList);
@@ -157,25 +168,12 @@ public class RoomListFragment extends Fragment {
             });
         }
 
-        // 2. Các chip gợi ý tìm kiếm nhanh
-        View chipLab = view.findViewById(R.id.chipLab);
-        if (chipLab != null) {
-            chipLab.setOnClickListener(v -> applySuggestion(getString(R.string.suggestion_lab)));
-        }
-
-        View chip101 = view.findViewById(R.id.chip101);
-        if (chip101 != null) {
-            chip101.setOnClickListener(v -> applySuggestion(getString(R.string.suggestion_101)));
-        }
-
-        View chipComputer = view.findViewById(R.id.chipComputer);
-        if (chipComputer != null) {
-            chipComputer.setOnClickListener(v -> applySuggestion(getString(R.string.suggestion_computer)));
-        }
-
-        View chipAll = view.findViewById(R.id.chipAll);
-        if (chipAll != null) {
-            chipAll.setOnClickListener(v -> applySuggestion(""));
+        // 2. Nút xóa lịch sử mã phòng gần đây
+        if (btnClearSearchHistory != null) {
+            btnClearSearchHistory.setOnClickListener(v -> {
+                RecentRoomHelper.clearRecentRooms(requireContext());
+                loadSuggestionChips();
+            });
         }
 
         // 3. Các nút lọc trạng thái
@@ -198,6 +196,105 @@ public class RoomListFragment extends Fragment {
             etSearchRoom.setText(text);
             etSearchRoom.setSelection(text.length());
         }
+        if (text != null && !text.trim().isEmpty()) {
+            RecentRoomHelper.addRecentRoom(requireContext(), text.trim());
+            loadSuggestionChips();
+        }
+    }
+
+    /**
+     * Tải danh sách chip gợi ý mã phòng theo Phương án 3 (Hybrid):
+     * Ưu tiên danh sách mã phòng đã xem/tìm kiếm gần đây trong SharedPreferences.
+     * Dự phòng (Fallback): Lấy các phòng cập nhật gần nhất từ SQLite nếu chưa có lịch sử.
+     */
+    private void loadSuggestionChips() {
+        if (!isAdded() || layoutChipsContainer == null || getContext() == null) return;
+
+        List<String> recentCodes = RecentRoomHelper.getRecentRooms(requireContext());
+        if (!recentCodes.isEmpty()) {
+            if (tvSuggestionsTitle != null) {
+                tvSuggestionsTitle.setText(R.string.search_recent_title);
+            }
+            if (btnClearSearchHistory != null) {
+                btnClearSearchHistory.setVisibility(View.VISIBLE);
+            }
+            renderChips(recentCodes);
+        } else {
+            // Dự phòng (Fallback): Lấy 5 phòng cập nhật gần nhất từ CSDL
+            if (tvSuggestionsTitle != null) {
+                tvSuggestionsTitle.setText(R.string.search_suggestions_title);
+            }
+            if (btnClearSearchHistory != null) {
+                btnClearSearchHistory.setVisibility(View.GONE);
+            }
+            roomRepository.getRecentRooms(5, new RepositoryCallback<List<Room>>() {
+                @Override
+                public void onSuccess(List<Room> rooms) {
+                    if (!isAdded() || layoutChipsContainer == null) return;
+                    List<String> fallbackCodes = new ArrayList<>();
+                    if (rooms != null) {
+                        for (Room r : rooms) {
+                            if (r.getRoomCode() != null && !fallbackCodes.contains(r.getRoomCode())) {
+                                fallbackCodes.add(r.getRoomCode());
+                            }
+                        }
+                    }
+                    renderChips(fallbackCodes);
+                }
+
+                @Override
+                public void onError(Exception e) {
+                    if (!isAdded() || layoutChipsContainer == null) return;
+                    renderChips(new ArrayList<>());
+                }
+            });
+        }
+    }
+
+    private void renderChips(List<String> codes) {
+        if (!isAdded() || layoutChipsContainer == null || getContext() == null) return;
+        layoutChipsContainer.removeAllViews();
+
+        float density = getResources().getDisplayMetrics().density;
+        int paddingH = (int) (10 * density);
+        int paddingV = (int) (8 * density);
+        int marginEnd = (int) (8 * density);
+
+        // 1. Thêm các chip mã phòng
+        if (codes != null) {
+            for (String code : codes) {
+                TextView chip = new TextView(requireContext());
+                chip.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.bg_suggestion_chip));
+                chip.setText(code);
+                chip.setTextColor(ContextCompat.getColor(requireContext(), R.color.card_blue_bg));
+                chip.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
+                chip.setTypeface(null, Typeface.BOLD);
+                chip.setPadding(paddingH, paddingV, paddingH, paddingV);
+                chip.setClickable(true);
+                chip.setFocusable(true);
+
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                params.setMarginEnd(marginEnd);
+                chip.setLayoutParams(params);
+
+                chip.setOnClickListener(v -> applySuggestion(code));
+                layoutChipsContainer.addView(chip);
+            }
+        }
+
+        // 2. Chip "Tất cả" luôn ở cuối để người dùng thuận tiện xóa bộ lọc
+        TextView chipAll = new TextView(requireContext());
+        chipAll.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.bg_suggestion_chip));
+        chipAll.setText(R.string.suggestion_all);
+        chipAll.setTextColor(ContextCompat.getColor(requireContext(), R.color.card_blue_bg));
+        chipAll.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
+        chipAll.setTypeface(null, Typeface.BOLD);
+        chipAll.setPadding(paddingH, paddingV, paddingH, paddingV);
+        chipAll.setClickable(true);
+        chipAll.setFocusable(true);
+        chipAll.setOnClickListener(v -> applySuggestion(""));
+        layoutChipsContainer.addView(chipAll);
     }
 
     private void updateSearchBarAppearance(boolean hasFocus) {
@@ -295,19 +392,7 @@ public class RoomListFragment extends Fragment {
         if (currentQuery == null || currentQuery.isEmpty()) return true;
         String q = currentQuery.toLowerCase(Locale.getDefault());
 
-        if (room.getRoomCode() != null && room.getRoomCode().toLowerCase(Locale.getDefault()).contains(q)) {
-            return true;
-        }
-        if (room.getRoomName() != null && room.getRoomName().toLowerCase(Locale.getDefault()).contains(q)) {
-            return true;
-        }
-        if (room.getRoomType() != null && room.getRoomType().toLowerCase(Locale.getDefault()).contains(q)) {
-            return true;
-        }
-        if (("tầng " + room.getFloor()).contains(q) || String.valueOf(room.getFloor()).equals(q)) {
-            return true;
-        }
-        return false;
+        return room.getRoomCode() != null && room.getRoomCode().toLowerCase(Locale.getDefault()).contains(q);
     }
 
     private boolean matchesStatusFilter(Room r) {
@@ -354,6 +439,7 @@ public class RoomListFragment extends Fragment {
                     itemView,
                     room,
                     v -> {
+                        RecentRoomHelper.addRecentRoom(requireContext(), room.getRoomCode());
                         Intent intent = new Intent(requireActivity(), RoomDetailActivity.class);
                         intent.putExtra(Constants.EXTRA_ROOM_CODE, room.getRoomCode());
                         intent.putExtra(Constants.EXTRA_ROOM_ITEM, room);

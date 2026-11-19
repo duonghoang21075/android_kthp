@@ -219,7 +219,7 @@ public class RoomDao {
     }
 
     /**
-     * Tìm kiếm phòng học theo từ khóa mã phòng, tên phòng hoặc loại phòng.
+     * Tìm kiếm phòng học theo mã phòng.
      */
     public List<Room> searchRooms(String keyword) {
         List<Room> rooms = new ArrayList<>();
@@ -228,24 +228,15 @@ public class RoomDao {
 
         String safeKeyword = keyword != null ? "%" + keyword.trim() + "%" : "%";
         String query = "SELECT * FROM " + table +
-                " WHERE " + Constants.COLUMN_ROOM_CODE + " LIKE ? OR " +
-                Constants.COLUMN_ROOM_NAME + " LIKE ? OR " +
-                Constants.COLUMN_ROOM_TYPE + " LIKE ?" +
+                " WHERE " + Constants.COLUMN_ROOM_CODE + " LIKE ?" +
                 " ORDER BY " + Constants.COLUMN_FLOOR + ", " + Constants.COLUMN_ROOM_CODE;
 
-        try (Cursor cursor = db.rawQuery(query, new String[]{safeKeyword, safeKeyword, safeKeyword})) {
+        try (Cursor cursor = db.rawQuery(query, new String[]{safeKeyword})) {
             while (cursor != null && cursor.moveToNext()) {
                 rooms.add(cursorToRoom(cursor));
             }
         } catch (Exception e) {
-            // Fallback nếu không có cột room_name / room_type
-            try (Cursor cursor = db.rawQuery("SELECT * FROM " + table + " WHERE " + Constants.COLUMN_ROOM_CODE + " LIKE ?", new String[]{safeKeyword})) {
-                while (cursor != null && cursor.moveToNext()) {
-                    rooms.add(cursorToRoom(cursor));
-                }
-            } catch (Exception ex) {
-                Log.e(TAG, "Lỗi tìm kiếm phòng: " + ex.getMessage());
-            }
+            Log.e(TAG, "Lỗi tìm kiếm phòng: " + e.getMessage());
         }
         return rooms;
     }
