@@ -14,6 +14,7 @@ import com.example.android_haui.model.Room;
 import com.example.android_haui.repository.RepositoryCallback;
 import com.example.android_haui.repository.RoomRepository;
 import com.example.android_haui.utils.Constants;
+import com.example.android_haui.utils.RecentRoomHelper;
 
 public class RoomDetailActivity extends AppCompatActivity {
 
@@ -106,6 +107,8 @@ public class RoomDetailActivity extends AppCompatActivity {
         if (room == null) return;
 
         currentRoomCode = room.getRoomCode();
+        RecentRoomHelper.addRecentRoom(this, currentRoomCode);
+
         String rawName = room.getRoomName();
         currentRoomName = (rawName != null && !rawName.trim().isEmpty())
                 ? rawName

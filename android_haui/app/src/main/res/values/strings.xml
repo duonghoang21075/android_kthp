@@ -27,17 +27,19 @@
     <string name="default_desc_placeholder">-- tầng · -- loại phòng</string>
     <string name="room_capacity_format">&#160;· %1$d chỗ</string>
 
-    <string name="search_hint">Nhập mã phòng hoặc tên phòng&#8230;</string>
+    <string name="search_hint">Nhập mã phòng cần tìm&#8230;</string>
     <string name="filter_all">Tất cả</string>
     <string name="all_rooms">Tất cả phòng học</string>
     <string name="rooms_count_format">%1$d phòng</string>
 
     <string name="search_title">Tìm kiếm phòng</string>
-    <string name="search_subtitle">Tìm theo mã, tên hoặc trạng thái</string>
-    <string name="search_suggestions_title">Thử nhanh từ khóa mẫu</string>
+    <string name="search_subtitle">Tìm kiếm theo mã phòng</string>
+    <string name="search_suggestions_title">Gợi ý phòng gần đây</string>
+    <string name="search_recent_title">Mã phòng đã xem gần đây</string>
+    <string name="clear_history">Xóa lịch sử</string>
     <string name="suggestion_lab">LAB</string>
     <string name="suggestion_101">101</string>
-    <string name="suggestion_computer">Máy tính</string>
+    <string name="suggestion_computer">HT</string>
     <string name="suggestion_all">Tất cả</string>
 
     <string name="search_results_count">7</string>

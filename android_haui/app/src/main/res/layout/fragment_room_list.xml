@@ -78,7 +78,7 @@
                     tools:visibility="visible"/>
             </LinearLayout>
 
-            <!-- Gợi ý từ khóa tìm kiếm nhanh (tích hợp từ màn hình tìm kiếm) -->
+            <!-- Gợi ý từ khóa tìm kiếm nhanh (Mã phòng đã xem gần đây / Gợi ý gần đây) -->
             <LinearLayout
                 android:id="@+id/layoutSuggestions"
                 android:layout_width="match_parent"
@@ -87,13 +87,36 @@
                 android:visibility="gone"
                 tools:visibility="visible">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/search_suggestions_title"
-                    android:textColor="@color/text_gray"
-                    android:textSize="12sp"
-                    android:layout_marginTop="12dp"/>
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="12dp">
+
+                    <TextView
+                        android:id="@+id/tvSuggestionsTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/search_suggestions_title"
+                        android:textColor="@color/text_gray"
+                        android:textSize="12sp"/>
+
+                    <TextView
+                        android:id="@+id/btnClearSearchHistory"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/clear_history"
+                        android:textColor="@color/text_gray"
+                        android:textSize="11sp"
+                        android:paddingHorizontal="6dp"
+                        android:paddingVertical="2dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:visibility="gone"
+                        tools:visibility="visible"/>
+                </LinearLayout>
 
                 <HorizontalScrollView
                     android:layout_width="match_parent"
@@ -102,69 +125,10 @@
                     android:layout_marginTop="8dp">
 
                     <LinearLayout
+                        android:id="@+id/layoutChipsContainer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/chipLab"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/bg_suggestion_chip"
-                            android:text="@string/suggestion_lab"
-                            android:textColor="@color/card_blue_bg"
-                            android:textSize="12sp"
-                            android:textStyle="bold"
-                            android:paddingHorizontal="10dp"
-                            android:paddingVertical="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:clickable="true"
-                            android:focusable="true"/>
-
-                        <TextView
-                            android:id="@+id/chip101"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/bg_suggestion_chip"
-                            android:text="@string/suggestion_101"
-                            android:textColor="@color/card_blue_bg"
-                            android:textSize="12sp"
-                            android:textStyle="bold"
-                            android:paddingHorizontal="10dp"
-                            android:paddingVertical="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:clickable="true"
-                            android:focusable="true"/>
-
-                        <TextView
-                            android:id="@+id/chipComputer"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/bg_suggestion_chip"
-                            android:text="@string/suggestion_computer"
-                            android:textColor="@color/card_blue_bg"
-                            android:textSize="12sp"
-                            android:textStyle="bold"
-                            android:paddingHorizontal="10dp"
-                            android:paddingVertical="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:clickable="true"
-                            android:focusable="true"/>
-
-                        <TextView
-                            android:id="@+id/chipAll"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/bg_suggestion_chip"
-                            android:text="@string/suggestion_all"
-                            android:textColor="@color/card_blue_bg"
-                            android:textSize="12sp"
-                            android:textStyle="bold"
-                            android:paddingHorizontal="10dp"
-                            android:paddingVertical="8dp"
-                            android:clickable="true"
-                            android:focusable="true"/>
-                    </LinearLayout>
+                        android:orientation="horizontal"/>
                 </HorizontalScrollView>
             </LinearLayout>
 
